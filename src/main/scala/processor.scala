@@ -1,13 +1,13 @@
-import scala.collection.mutable
+import scala.collection.mutable.HashMap
 import scala.io.Source
 
 class processor extends App {
 	val lines = Source.fromFile("/home/eric/random_projects/donation_analytics/insight_testsuite/tests/test_1/input/itcont.txt").getLines()
 	
-	val recipientMap = scala.collection.mutable.HashMap.empty[String, recipient]
-	val donorMap = scala.collection.mutable.HashMap.empty[String, donor]
+	val recipientMap = HashMap.empty[String, recipient]
+	val donorMap = HashMap.empty[String, donor]
 	
-	def processNew[T <: donationObject](map: mutable.HashMap[String, T])(newObject: T): Unit = {
+	def processNew[T <: donationObject](map: HashMap[String, T])(newObject: T): Unit = {
 		if (map.isDefinedAt(newObject.id))
 			map(newObject.id) += newObject
 		else
