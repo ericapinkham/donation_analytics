@@ -13,7 +13,7 @@ case class recipient(cmte_id: String, zip5: String, year: Int, amount: Int, tran
 	
 	// define addition
 	def +(other: recipient): recipient = (this, other) match {
-		case (recipient(_, _, _, _, _), recipient.None) => this
+//		case (recipient(_, _, _, _, _), recipient.None) => this
 		case (recipient(cmte_idX, zip5X, yearX, amountX, transactionsX), recipient(cmte_idY, zip5Y, yearY, amountY, transactionsY))
 			if cmte_idX == cmte_idY & zip5X == zip5Y & yearX == yearY
 			=> recipient(cmte_idX, zip5X, yearX, amountX + amountY, transactionsX + transactionsY)
