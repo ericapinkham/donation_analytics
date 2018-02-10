@@ -1,4 +1,6 @@
-class donation(val cmte_id: String, val name: String, zip_code: String, transaction_dt: String, transaction_amt_string: String, other_id: String) {
+// I think i want to do a companion object?
+
+case class donation(cmte_id: String, name: String, zip_code: String, transaction_dt: String, transaction_amt_string: String, other_id: String) {
 	// Convert types to whatever we need them to be
 	lazy val transaction_amt: Int = transaction_amt_string.toInt
 	
