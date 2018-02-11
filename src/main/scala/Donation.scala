@@ -29,18 +29,22 @@ object Donation {
 	
 	private val patternYear = """\d{4}(\d{4})$""" r
 	private def extractYear(transactionDate: String): Int = {
-		patternYear.findFirstIn(transactionDate).getOrElse("") match {
-			case patternYear(year) => year.toInt
-			case patternYear(_*) => 0
-		}
+		if (regexMatch(patternYear)(transactionDate))
+			transactionDate match {
+				case patternYear(year) => year.toInt
+				case patternYear(_*) => 0
+			}
+		else 0
 	}
 	
 	private val patternZip = """(\d{5})\d{0,4}$""" r
 	private def extractZip(zip: String): String = {
-		patternZip.findFirstIn(zip).getOrElse("") match {
-			case patternZip(zip5) => zip5
-			case patternZip(_*) => ""
-		}
+		if (regexMatch(patternZip)(zip))
+			patternZip.findFirstIn(zip).getOrElse("") match {
+				case patternZip(zip5) => zip5
+				case patternZip(_*) => ""
+			}
+		else ""
 	}
 	
 	private def extractAmount(transaction_amt: String): Double = transaction_amt.toDouble

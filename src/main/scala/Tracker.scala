@@ -35,6 +35,7 @@ object Tracker {
 		else
 			recipients(newRecipient.id) = newRecipient
 		
+		
 		// return the newly registered recipient
 		recipients(newRecipient.id)
 	}
@@ -47,5 +48,5 @@ object Tracker {
 	  */
 	def donatedInYear(donorId: String, year: Int): Boolean = donors.getOrElse(donorId, Set()).contains(year)
 	
-	def percentileValue: Double = (recipients.values.map(_.amount).toList.sorted).apply((percentile / 100.0 * recipients.count(_ => true)).toInt)
+	def percentileValue: Int = math.round(contributions.sorted.apply((percentile / 100.0 * contributions.length).toInt)).toInt
 }
