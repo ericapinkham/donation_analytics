@@ -1,6 +1,6 @@
 import scala.util.matching.Regex
 
-object donation {
+object Donation {
 	/** Constructor for donation class
 	  *
 	  * @param cmte_id recipient of donation
@@ -11,8 +11,8 @@ object donation {
 	  * @param other_id used for determining if the donation is valid
 	  * @return
 	  */
-	def apply(cmte_id: String, name: String, zip_code: String, transaction_dt: String, transaction_amt: String, other_id: String): donation =
-		new donation(cmte_id, name, extractZip(zip_code), extractYear(transaction_dt), extractAmount(transaction_amt), other_id)
+	def apply(cmte_id: String, name: String, zip_code: String, transaction_dt: String, transaction_amt: String, other_id: String): Donation =
+		new Donation(cmte_id, name, extractZip(zip_code), extractYear(transaction_dt), extractAmount(transaction_amt), other_id)
 	
 	/**
 	  *
@@ -55,29 +55,25 @@ object donation {
   * @param amount the amount of the donation
   * @param other_id used for verifying this is the correct type of transaction
   */
-case class donation(cmte_id: String, name: String, zip: String, year: Int, amount: Double, other_id: String) {
-
-	
+case class Donation(cmte_id: String, name: String, zip: String, year: Int, amount: Double, other_id: String) {
 	/** Determines whether this is a valid donation. I.e., all fields are readable and parsed correctly.*/
 	val isValid: Boolean = {
 		List(
-			donation.regexMatch("""^[a-zA-Z\d]{9}""".r)(cmte_id),
-			donation.regexMatch("""^.{0,200}$""".r)(name),
-			donation.regexMatch("""^\d{5}$""".r)(zip),
+			Donation.regexMatch("""^[a-zA-Z\d]{9}""".r)(cmte_id),
+			Donation.regexMatch("""^.{0,200}$""".r)(name),
+			Donation.regexMatch("""^\d{5}$""".r)(zip),
 			year > 2000, // this is dumb
 			amount >= 0.0,
 			other_id == ""
 		).foldLeft(true)((a,b) => a & b)
 	}
 	
-	lazy val isFromRepeatDonor: Boolean = {
-		/**
-		  * Determines whether this is from a repeat donor.
-		  */
-		true
-	}
+	/** Whether this is from a repeat donor or not */
+	val isFromRepeatDonor: Boolean = tracker.donatedInYear(donorId, year - 1)
 	
+	/** A "unique" identifier for this object */
 	lazy val donorId: String = s"$zip|$name"
 	
+
 	override def toString: String = s"donation:$cmte_id|$name|$zip|$year|$amount|$other_id"
 }
