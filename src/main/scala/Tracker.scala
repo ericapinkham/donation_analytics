@@ -4,11 +4,10 @@ import scala.io.Source
 /**
   *
   */
-object Tracker {
+class Tracker(val percentile: Int) {
 	val recipients = HashMap.empty[String, Recipient]
 	val donors = HashMap.empty[String, Set[Int]]
 	var contributions: List[Double] = Nil
-	private val percentile: Int = Source.fromFile("/home/eric/random_projects/donation_analytics/insight_testsuite/tests/test_1/input/percentile.txt").getLines.next().toInt
 	
 	/**
 	  *

@@ -10,6 +10,5 @@ object Parser {
 				=> Donation(cmte_id, name, zip_code, transaction_dt, transaction_amt, other_id)
 			case _ => throw new Error(s"$l doesn't unpack properly")
 		}
-
 	}
 }

@@ -3,8 +3,8 @@ import org.scalatest.FunSuite
 import scala.io.Source
 
 class TestSuite extends FunSuite {
-	val lines = Source.fromFile("/home/eric/random_projects/donation_analytics/insight_testsuite/tests/test_1/input/itcont.txt").getLines().toList
-	val donations = lines.map(Parser.parseLine(_))
+	private val lines = Source.fromFile("./insight_testsuite/tests/test_1/input/itcont.txt").getLines().toList
+	private val donations = lines.map(Parser.parseLine)
 	
 	test("cmte_id 01") {
 		assert(donations(0).cmte_id === "C00629618")

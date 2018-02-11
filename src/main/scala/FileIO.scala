@@ -1,17 +1,15 @@
-import java.io.{BufferedOutputStream, BufferedWriter, File, FileWriter}
-
+import java.io.{BufferedWriter, File, FileWriter}
 import scala.io.Source
 
-class FileIO(workingDirectory: String) {
+class FileIO(itcontPath: String, percentilePath: String, outputPath: String = "./output/repeat_donors.txt") {
+
+	def readLines(): Iterator[String] = Source.fromFile(itcontPath).getLines()
 	
-	private def joinPath(path1: String, path2: String): String = new File(path1, path2).toString
+	lazy val outputFile: java.io.File = new File(outputPath)
+	lazy val outputWriter: java.io.BufferedWriter = new BufferedWriter(new FileWriter(outputFile))
+	lazy val percentileValue: Int = Source.fromFile(percentilePath).mkString.trim().toInt
 	
-	def readLines(): Iterator[String] = Source.fromFile(joinPath(workingDirectory, "input/itcont.txt")).getLines()
-	
-	val outputFile: java.io.File = new File(joinPath(workingDirectory, "output/repeat_donors.txt"))
-	val outputWriter: java.io.BufferedWriter = new BufferedWriter(new FileWriter(outputFile))
-	
-	def writeLine(line: String): Unit = outputWriter.write(line)
+	def writeLine(line: String): Unit = outputWriter.write(line + "\n")
 	
 	def flushOutput(): Unit = outputWriter.flush()
 	

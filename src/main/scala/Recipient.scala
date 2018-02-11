@@ -18,7 +18,7 @@ object Recipient {
   */
 case class Recipient(cmte_id: String, zip5: String, year: Int, amount: Double, transactions: Int) {
 	/** Asks the tracker for the current percentile */
-	val percentile: Int = Tracker.percentileValue
+	val percentile: Int = Main.tracker.percentileValue
 	
 	/** An identifer for this object */
 	val id: String = s"$cmte_id|$zip5|$year"
