@@ -25,4 +25,10 @@ class TestSuite extends FunSuite {
 	test("isValid 02: Valid test case") {
 		assert(donations(1).isValid === true)
 	}
+	
+	test("tracker 01: year of new donation object") {
+		tracker.register(donations(2))
+		val trackerYear = tracker.donors(donations(2).donorId)
+		assert(trackerYear.contains(donations(2).year))
+	}
 }

@@ -14,6 +14,18 @@ object donation {
 	def apply(cmte_id: String, name: String, zip_code: String, transaction_dt: String, transaction_amt: String, other_id: String): donation =
 		new donation(cmte_id, name, extractZip(zip_code), extractYear(transaction_dt), extractAmount(transaction_amt), other_id)
 	
+	/**
+	  *
+	  * @param pattern the regex pattern to use
+	  * @param searchString the string being searched
+	  * @return
+	  */
+	def regexMatch(pattern: Regex)(searchString: String): Boolean = {
+		searchString match {
+			case pattern(_*) => true
+			case _ => false
+		}
+	}
 	
 	private val patternYear = """\d{4}(\d{4})$""" r
 	private def extractYear(transactionDate: String): Int = {
@@ -44,26 +56,14 @@ object donation {
   * @param other_id used for verifying this is the correct type of transaction
   */
 case class donation(cmte_id: String, name: String, zip: String, year: Int, amount: Double, other_id: String) {
-	/**
-	  *
-	  * @param pattern the regex pattern to use
-	  * @param searchString the string being searched
-	  * @return
-	  */
-	def regexMatch(pattern: Regex)(searchString: String) = {
-		searchString match {
-			case pattern(_*) => true
-			case _ => false
-		}
-	}
+
 	
 	/** Determines whether this is a valid donation. I.e., all fields are readable and parsed correctly.*/
 	val isValid: Boolean = {
-		
 		List(
-			regexMatch("""^[a-zA-Z\d]{9}""".r)(cmte_id),
-			regexMatch("""^.{0,200}$""".r)(name),
-			regexMatch("""^\d{5}$""".r)(zip),
+			donation.regexMatch("""^[a-zA-Z\d]{9}""".r)(cmte_id),
+			donation.regexMatch("""^.{0,200}$""".r)(name),
+			donation.regexMatch("""^\d{5}$""".r)(zip),
 			year > 2000, // this is dumb
 			amount >= 0.0,
 			other_id == ""
@@ -76,6 +76,8 @@ case class donation(cmte_id: String, name: String, zip: String, year: Int, amoun
 		  */
 		true
 	}
+	
+	lazy val donorId: String = s"$zip|$name"
 	
 	override def toString: String = s"donation:$cmte_id|$name|$zip|$year|$amount|$other_id"
 }

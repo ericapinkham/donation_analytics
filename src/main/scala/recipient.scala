@@ -11,7 +11,11 @@ case class recipient(cmte_id: String, zip5: String, year: Int, amount: Int, tran
 	// An identifer for this object
 	val id: String = s"$cmte_id|$zip5|$year"
 	
-	// define addition
+	/** Combines two recipient records into a new recipient record
+	  *
+	  * @param other another recipient record
+	  * @return
+	  */
 	def +(other: recipient): recipient = (this, other) match {
 //		case (recipient(_, _, _, _, _), recipient.None) => this
 		case (recipient(cmte_idX, zip5X, yearX, amountX, transactionsX), recipient(cmte_idY, zip5Y, yearY, amountY, transactionsY))
@@ -20,5 +24,6 @@ case class recipient(cmte_id: String, zip5: String, year: Int, amount: Int, tran
 		case _ => throw new Error(s"Non-compatible recipients: $this, $other")
 	}
 	
+	/** Makes this object printable */
 	override def toString: String = s"$cmte_id|$zip5|$year|$percentile|$amount|$transactions"
 }
