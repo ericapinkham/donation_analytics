@@ -4,7 +4,7 @@ import scala.io.Source
 
 class TestSuite extends FunSuite {
 	val lines = Source.fromFile("/home/eric/random_projects/donation_analytics/insight_testsuite/tests/test_1/input/itcont.txt").getLines().toList
-	val donations = lines.map(parser.parseLine(_))
+	val donations = lines.map(Parser.parseLine(_))
 	
 	test("cmte_id 01") {
 		assert(donations(0).cmte_id === "C00629618")
@@ -27,8 +27,8 @@ class TestSuite extends FunSuite {
 	}
 	
 	test("tracker 01: year of new donation object") {
-		tracker.register(donations(2))
-		val trackerYear = tracker.donors(donations(2).donorId)
+		Tracker.register(donations(2))
+		val trackerYear = Tracker.donors(donations(2).donorId)
 		assert(trackerYear.contains(donations(2).year))
 	}
 }

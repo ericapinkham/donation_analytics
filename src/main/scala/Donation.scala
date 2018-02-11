@@ -69,11 +69,11 @@ case class Donation(cmte_id: String, name: String, zip: String, year: Int, amoun
 	}
 	
 	/** Whether this is from a repeat donor or not */
-	val isFromRepeatDonor: Boolean = tracker.donatedInYear(donorId, year - 1)
+	val isFromRepeatDonor: Boolean = Tracker.donatedInYear(donorId, year - 1)
 	
 	/** A "unique" identifier for this object */
 	lazy val donorId: String = s"$zip|$name"
 	
-
+	/** A way to display the donation in human readable format */
 	override def toString: String = s"donation:$cmte_id|$name|$zip|$year|$amount|$other_id"
 }

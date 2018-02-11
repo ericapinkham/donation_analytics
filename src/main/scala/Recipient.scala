@@ -11,7 +11,7 @@ object Recipient {
 }
 
 case class Recipient(cmte_id: String, zip5: String, year: Int, amount: Double, transactions: Int) {
-	// to implement
+	
 	lazy val percentile: Int = 50
 	
 	// An identifer for this object
