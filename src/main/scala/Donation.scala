@@ -94,8 +94,8 @@ case class Donation(cmte_id: String, name: String, zip: String, year: Int, amoun
 			Donation.regexMatch("""^[a-zA-Z\d]{9}""".r)(cmte_id),
 			Donation.regexMatch("""^.{0,200}$""".r)(name),
 			Donation.regexMatch("""^\d{5}$""".r)(zip),
-			year > 2000, // this is dumb
-			amount >= 0.0,
+			year > 1776, // FEC probably didn't collect data before this
+			amount >= 0,
 			other_id == ""
 		).foldLeft(true)((a,b) => a & b)
 	}
