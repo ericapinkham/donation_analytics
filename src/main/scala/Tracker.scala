@@ -1,8 +1,8 @@
 import scala.collection.mutable.HashMap
-import scala.io.Source
 
 /**
-  *
+  * Keeps track of recipients, donations and percentiles
+  * @param percentile the integer percentile we're asked to calculate
   */
 class Tracker(val percentile: Int) {
 	val recipients = HashMap.empty[String, Recipient]
@@ -10,7 +10,7 @@ class Tracker(val percentile: Int) {
 	var contributions: List[Double] = Nil
 	
 	/**
-	  *
+	  * Takes a donation and processes its information
 	  * @param newDonation the newly received donation
 	  */
 	def register(newDonation: Donation): Unit = {
@@ -24,6 +24,11 @@ class Tracker(val percentile: Int) {
 		if (newDonation.isFromRepeatDonor) contributions = newDonation.amount :: contributions
 	}
 	
+	/**
+	  * Responsible for generating and maintaining recipient records
+	  * @param newDonation the new donation to process
+	  * @return A new recipient object
+	  */
 	def processRecipient(newDonation: Donation): Recipient = {
 		// Generate a recipient object
 		val newRecipient = Recipient(newDonation)
@@ -34,18 +39,21 @@ class Tracker(val percentile: Int) {
 		else
 			recipients(newRecipient.id) = newRecipient
 		
-		
 		// return the newly registered recipient
 		recipients(newRecipient.id)
 	}
 	
-	/** Answer the question: Did this donor donate in this year?
-	  *
+	/**
+	  * Answer the question: Did this donor donate in this year?
 	  * @param donorId the unique id of the donor
 	  * @param year the year
-	  * @return
+	  * @return True if the donor made a donation in the requested year
 	  */
 	def donatedInYear(donorId: String, year: Int): Boolean = donors.getOrElse(donorId, Set()).contains(year)
 	
+	/**
+	  * Calculates the percentile
+	  * @return the percentile
+	  */
 	def percentileValue: Int = math.round(contributions.sorted.apply((percentile / 100.0 * contributions.length).toInt)).toInt
 }

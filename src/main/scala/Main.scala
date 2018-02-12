@@ -8,9 +8,9 @@ object Main extends App {
 	
 	// This keeps track of everything important
 	val tracker = new Tracker(fileIO.percentileValue)
-	
+
 	// Iterate through each donation and process donations one at a time
-	for (newDonation <- fileIO.readLines().map(Parser.parseLine)) {
+	for (newDonation <- fileIO.readLines().map(Donation(_, tracker))) {
 		// Check if the donation is valid
 		if (newDonation.isValid) {
 			// Register all valid donations. This keeps track of donor/zip and years they donated, along with how their contribution
@@ -18,7 +18,7 @@ object Main extends App {
 			
 			// If this is a repeat donor, we create a new recipient object to write to file
 			if (newDonation.isFromRepeatDonor) {
-				val newRecipient = tracker.processRecipient(newDonation)
+				val newRecipient = newDonation.recipient
 				fileIO.writeLine(newRecipient.toString)
 			}
 		}
