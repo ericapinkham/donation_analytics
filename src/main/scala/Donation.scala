@@ -39,8 +39,8 @@ object Donation {
 			case _ => false
 		}
 	}
-
-	private val patternYear = """\d{4}(\d{4})$""" r // for some reason the compiler freaks out if this is in the function definition
+	
+	private val patternYear = """\d{4}(\d{4})$""".r // for some reason the compiler freaks out if this is in the function definition
 	/**
 	  * Extracts the year
 	  * @param transactionDate the date string from which to extract the year
@@ -55,7 +55,7 @@ object Donation {
 		else 0
 	}
 	
-	private val patternZip = """(\d{5})\d{0,4}$""" r // for some reason the compiler freaks out if this is in the function definition
+	private val patternZip = """(\d{5})\d{0,4}$""".r // for some reason the compiler freaks out if this is in the function definition
 	/**
 	  * Extracts the 5 digit zip code from a possibly 9 digit zip
 	  * @param zip the zip code
