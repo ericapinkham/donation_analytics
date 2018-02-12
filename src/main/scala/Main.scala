@@ -1,4 +1,4 @@
-object Main extends App {
+object Main extends App with Processor {
 	// Process the arguments and create the fileIO object which handles reading and writing to files
 	val fileIO = args match {
 		case Array(itcontFile, percentileFile, outputFile) => new FileIO(itcontFile, percentileFile, outputFile)
@@ -8,22 +8,7 @@ object Main extends App {
 	
 	// This keeps track of everything important
 	val tracker = new Tracker(fileIO.percentileValue)
-
-	// Iterate through each donation and process donations one at a time
-	for (newDonation <- fileIO.readLines().map(Donation(_))) {
-		// Check if the donation is valid
-		if (newDonation.isValid) {
-			// Register all valid donations. This keeps track of donor/zip and years they donated, along with how their contribution
-			tracker.register(newDonation)
-			
-			// If this is a repeat donor, we create a new recipient object to write to file
-			if (tracker.isFromRepeatDonor(newDonation)) {
-				val newRecipient = tracker.getRecipient(newDonation)
-				fileIO.writeLine(newRecipient.toString)
-			}
-		}
-	}
 	
-	// Close the file
-	fileIO.closeOutputFile()
+	// Execute
+	processDonations()
 }
