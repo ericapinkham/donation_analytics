@@ -1,3 +1,5 @@
+import Trees.RedBlackTree.EmptyTree
+
 object Tracker {
 	/**
 	  * Computes percentiles
@@ -5,8 +7,11 @@ object Tracker {
 	  * @param contributions a list of things on which to compute the precentile
 	  * @return
 	  */
-	def computePercentile(percentile: Int)(contributions: List[Int]): Int = {
-		contributions.sorted.apply((percentile / 100.0 * contributions.length).ceil.toInt - 1)
+//	def computePercentile(percentile: Int)(contributions: List[Int]): Int = {
+//		contributions.sorted.apply((percentile / 100.0 * contributions.length).ceil.toInt - 1)
+//	}
+	def computePercentile(percentile: Int)(contributions: Trees.RedBlackTree.RedBlackTree): Int = {
+		Trees.RedBlackTree.kthOrder((percentile / 100.0 * contributions.size).ceil.toInt, contributions)
 	}
 }
 
@@ -17,7 +22,7 @@ object Tracker {
 class Tracker(percentile: Int) {
 	val recipients = scala.collection.mutable.HashMap.empty[String, Recipient]
 	val donors = scala.collection.mutable.HashMap.empty[String, Set[Int]]
-	var contributions: List[Int] = Nil
+	var contributions: Trees.RedBlackTree.RedBlackTree = EmptyTree
 	
 	/**
 	  * Takes a donation and processes its information
@@ -31,7 +36,7 @@ class Tracker(percentile: Int) {
 			donors(newDonation.donorId) = Set(newDonation.year)
 		
 		// If this donation is from a repeat donor, add it's amount to contributions for percentile tracking
-		if (isFromRepeatDonor(newDonation)) contributions = newDonation.amount :: contributions
+		if (isFromRepeatDonor(newDonation)) contributions = contributions.insert(newDonation.amount)
 	}
 	
 	/**

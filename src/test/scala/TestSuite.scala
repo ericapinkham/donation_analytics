@@ -129,12 +129,11 @@ class TestSuite extends FunSuite {
 	}
 	
 	test("Percentile Computation") {
-		val l = List(15, 20, 35, 40, 50)
+		val l = Trees.RedBlackTree.Tree(List(15, 20, 35, 40, 50))
 		assert(Tracker.computePercentile(5)(l) === 15)
 		assert(Tracker.computePercentile(30)(l) === 20)
 		assert(Tracker.computePercentile(40)(l) === 20)
 		assert(Tracker.computePercentile(50)(l) === 35)
 		assert(Tracker.computePercentile(100)(l) === 50)
-		
 	}
 }

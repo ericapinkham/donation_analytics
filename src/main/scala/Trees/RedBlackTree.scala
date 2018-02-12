@@ -140,9 +140,9 @@ object RedBlackTree {
 	@tailrec
 	def kthOrder(k: Int, tree: RedBlackTree): Int = tree match {
 		case Tree(_, l, v, r) =>
-			if (k < tree.size) kthOrder(k, l)
-			else if (k > tree.size) kthOrder(k, r)
+			if (k < l.size + 1) kthOrder(k, l)
+			else if (k > l.size + 1) kthOrder(k - l.size - 1, r)
 			else v
-		case EmptyTree => throw new Error("Index out of bound")
+		case EmptyTree => throw new Error(s"Index out of bound: $k / ${tree.size} for tree $tree")
 	}
 }
