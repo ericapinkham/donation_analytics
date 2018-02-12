@@ -11,6 +11,7 @@ object RedBlackTree {
 	/**
 	  * Abstract for the EmptyTree and Tree classes
 	  */
+	object RedBlackTree {}
 	sealed abstract class RedBlackTree {
 		def insert(a: Int): Tree
 		def ins(a: Int): Tree
