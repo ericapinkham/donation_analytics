@@ -12,13 +12,19 @@ class TestSuite extends FunSuite {
 		val donations: List[Donation] = fileIO.readLines().map(Donation(_)).toList
 	}
 	
-	trait OutOfOrder {
+	trait OutOfOrder extends Processor {
+		var output: String = ""
+		
+		override def writeLine(line: String): Unit = {
+			output += line
+		}
+		
 		val lines = """C00384516|N|M2|P|201702039042410894|15|IND|SABOURIN, JOE|LOOKOUT MOUNTAIN|GA|028956146|UNUM|SVP, CORPORATE COMMUNICATIONS|01312016|484||PR2283904845050|1147350||P/R DEDUCTION ($192.00 BI-WEEKLY)|4020820171370029339
 		C00384516|N|M2|P|201702039042410894|15|IND|SABOURIN, JOE|LOOKOUT MOUNTAIN|GA|028956146|UNUM|SVP, CORPORATE COMMUNICATIONS|01312015|384||PR2283904845050|1147350||P/R DEDUCTION ($192.00 BI-WEEKLY)|4020820171370029339
-		C00384516|N|M2|P|201702039042410893|15|IND|SABOURIN, JOE|LOOKOUT MOUNTAIN|GA|028956146|UNUM|SVP, CORPORATE COMMUNICATIONS|01312017|230||PR1890575345050|1147350||P/R DEDUCTION ($115.00 BI-WEEKLY)|4020820171370029335""".split("\n")
+		C00384516|N|M2|P|201702039042410893|15|IND|SABOURIN, JOE|LOOKOUT MOUNTAIN|GA|028956146|UNUM|SVP, CORPORATE COMMUNICATIONS|01312017|230||PR1890575345050|1147350||P/R DEDUCTION ($115.00 BI-WEEKLY)|4020820171370029335""".split("\n").map(_.trim()).toIterator
 		val tracker = new Tracker(50)
-		val donations: List[Donation] = lines.map(Donation(_)).toList
-			}
+		
+	}
 	
 	test("cmte_id 01") {
 		new test1 {
@@ -59,5 +65,10 @@ class TestSuite extends FunSuite {
 		}
 	}
 	
-	
+	test("Out of order donations") {
+		new OutOfOrder {
+			processDonations(lines)
+			assert(this.output === "C00384516|02895|2017|230|230|1")
+		}
+	}
 }

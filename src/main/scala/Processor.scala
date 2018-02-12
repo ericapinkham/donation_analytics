@@ -2,15 +2,17 @@
   * Abstracted methods to be executed by the Main object
   */
 trait Processor {
-	val fileIO: FileIO
 	val tracker: Tracker
+	val lines: Iterator[String]
+	
+	def writeLine(line: String): Unit
 	
 	/**
 	  * The workhorse method. Processes all lines in the file.
 	  */
-	def processDonations(): Unit = {
+	def processDonations(lines: Iterator[String]): Unit = {
 		// Iterate through each donation and process donations one at a time
-		for (newDonation <- fileIO.readLines().map(Donation(_))) {
+		for (newDonation <- lines.map(Donation(_))) {
 			// Check if the donation is valid
 			if (newDonation.isValid) {
 				// Register all valid donations. This keeps track of donor/zip and years they donated, along with how their contribution
@@ -19,12 +21,9 @@ trait Processor {
 				// If this is a repeat donor, we create a new recipient object to write to file
 				if (tracker.isFromRepeatDonor(newDonation)) {
 					val newRecipient = tracker.getRecipient(newDonation)
-					fileIO.writeLine(newRecipient.toString)
+					writeLine(newRecipient.toString)
 				}
 			}
 		}
-		
-		// Close the file
-		fileIO.closeOutputFile()
 	}
 }
