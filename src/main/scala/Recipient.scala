@@ -16,8 +16,8 @@ object Recipient {
 	  * @param donation the donation from which to generate a recipient object
 	  * @return a new recipient object
 	  */
-	def apply(donation: Donation): Recipient = donation match {
-		case Donation(cmte_id, _, zip, year, amount, _, tracker) => new Recipient(cmte_id, zip, year, amount, 1, tracker)
+	def apply(tracker: Tracker)(donation: Donation): Recipient = donation match {
+		case Donation(cmte_id, _, zip, year, amount, _) => new Recipient(cmte_id, zip, year, amount, 1, tracker)
 		case _ => throw new Error(s"Invalid parameter @donation: $donation")
 	}
 }

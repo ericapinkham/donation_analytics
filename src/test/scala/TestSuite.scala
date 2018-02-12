@@ -10,7 +10,7 @@ class TestSuite extends FunSuite {
 		// This keeps track of everything important
 		val tracker = new Tracker(fileIO.percentileValue)
 		val parser = new Parser(tracker)
-		val donations = fileIO.readLines().map(parser.parseLine).toList
+		val donations = fileIO.readLines().map(Donation(_)).toList
 	}
 	
 	test("cmte_id 01") {

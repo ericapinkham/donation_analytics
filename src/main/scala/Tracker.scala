@@ -21,7 +21,7 @@ class Tracker(val percentile: Int) {
 			donors(newDonation.donorId) = Set(newDonation.year)
 		
 		// If this donation is from a repeat donor, add it's amount to contributions for percentile tracking
-		if (newDonation.isFromRepeatDonor) contributions = newDonation.amount :: contributions
+		if (isFromRepeatDonor(newDonation)) contributions = newDonation.amount :: contributions
 	}
 	
 	/**
@@ -29,9 +29,9 @@ class Tracker(val percentile: Int) {
 	  * @param newDonation the new donation to process
 	  * @return A new recipient object
 	  */
-	def processRecipient(newDonation: Donation): Recipient = {
+	def getRecipient(newDonation: Donation): Recipient = {
 		// Generate a recipient object
-		val newRecipient = Recipient(newDonation)
+		val newRecipient = Recipient(this)(newDonation)
 		
 		// Aggregate or set
 		if (recipients.isDefinedAt(newRecipient.id))
@@ -50,6 +50,13 @@ class Tracker(val percentile: Int) {
 	  * @return True if the donor made a donation in the requested year
 	  */
 	def donatedInYear(donorId: String, year: Int): Boolean = donors.getOrElse(donorId, Set()).contains(year)
+	
+	/**
+	  * Determines if the donation came from a repeat donor
+	  * @param newDonation the donation object
+	  * @return
+	  */
+	def isFromRepeatDonor(newDonation: Donation): Boolean = donatedInYear(newDonation.donorId, newDonation.year - 1)
 	
 	/**
 	  * Calculates the percentile
