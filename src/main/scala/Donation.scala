@@ -39,7 +39,6 @@ object Donation {
 			case _ => false
 		}
 	}
-	
 
 	private val patternYear = """\d{4}(\d{4})$""" r // for some reason the compiler freaks out if this is in the function definition
 	/**
@@ -72,11 +71,11 @@ object Donation {
 	}
 	
 	/**
-	  * Extracts the amount
+	  * Extracts the amount. I'm assuming that this is supposed to be rounded though it's not explicit in the instructions.
 	  * @param transaction_amt the amount as a string
-	  * @return the amount as a double
+	  * @return the amount as a Int
 	  */
-	private def extractAmount(transaction_amt: String): Double = transaction_amt.toDouble
+	private def extractAmount(transaction_amt: String): Int = math.round(transaction_amt.toDouble).toInt
 }
 
 /**
@@ -85,10 +84,10 @@ object Donation {
   * @param name the name of the donor
   * @param zip the 5 digit zip code string
   * @param year the year in which the donation was made
-  * @param amount the amount of the donation
+  * @param amount the amount of the donation. It's not specified, but this seems to be rounded.
   * @param other_id used for verifying this is the correct type of transaction
   */
-case class Donation(cmte_id: String, name: String, zip: String, year: Int, amount: Double, other_id: String) {
+case class Donation(cmte_id: String, name: String, zip: String, year: Int, amount: Int, other_id: String) {
 	/** Determines whether this is a valid donation. I.e., all fields are readable and parsed correctly.*/
 	val isValid: Boolean = {
 		List(

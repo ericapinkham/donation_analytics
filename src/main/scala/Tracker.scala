@@ -4,10 +4,10 @@ import scala.collection.mutable.HashMap
   * Keeps track of recipients, donations and percentiles
   * @param percentile the integer percentile we're asked to calculate
   */
-class Tracker(val percentile: Int) {
+class Tracker(percentile: Int) {
 	val recipients = HashMap.empty[String, Recipient]
 	val donors = HashMap.empty[String, Set[Int]]
-	var contributions: List[Double] = Nil
+	var contributions: List[Int] = Nil
 	
 	/**
 	  * Takes a donation and processes its information
@@ -62,5 +62,5 @@ class Tracker(val percentile: Int) {
 	  * Calculates the percentile
 	  * @return the percentile
 	  */
-	def percentileValue: Int = math.round(contributions.sorted.apply((percentile / 100.0 * contributions.length).toInt)).toInt
+	def percentileValue: Int = Common.computePercentile(percentile)(contributions)
 }

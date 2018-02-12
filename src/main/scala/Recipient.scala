@@ -9,7 +9,7 @@ object Recipient {
 	  * @param transactions the number of transactions made to this recipient by repeat donors
 	  * @return a new recipient object
 	  */
-	def apply(cmte_id: String, zip5: String, year: Int, amount: Double, transactions: Int, tracker: Tracker): Recipient = new Recipient(cmte_id, zip5, year, amount, transactions, tracker)
+	def apply(cmte_id: String, zip5: String, year: Int, amount: Int, transactions: Int, tracker: Tracker): Recipient = new Recipient(cmte_id, zip5, year, amount, transactions, tracker)
 
 	/**
 	  * Generates a new recipient
@@ -30,7 +30,7 @@ object Recipient {
   * @param amount the amount of the donation
   * @param transactions the number of transactions for this id and zip code
   */
-case class Recipient(cmte_id: String, zip5: String, year: Int, amount: Double, transactions: Int = 1, tracker: Tracker) {
+case class Recipient(cmte_id: String, zip5: String, year: Int, amount: Int, transactions: Int = 1, tracker: Tracker) {
 	/** Asks the tracker for the current percentile */
 	val percentile: Int = tracker.percentileValue
 	
