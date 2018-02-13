@@ -3,13 +3,13 @@
 2. [Dependencies](README.md#dependencies)
 3. [Main](README.md#main)
 4. [Fec Package](README.md#fec)
-    5. [Donation](README.md#donation)
-    6. [FileIO](README.md#fileio)
-    7. [Processor](README.md#processor)
-    8. [Recipient](README.md#recipient)
-    9. [Tracker](README.md#tracker)
-10. [Trees Package](README.md#trees)
-    11. [RedBlackTree](README.md#redblacktree)
+    i. [Donation](README.md#donation)
+    ii. [FileIO](README.md#fileio)
+    iii. [Processor](README.md#processor)
+    iv. [Recipient](README.md#recipient)
+    v. [Tracker](README.md#tracker)
+5. [Trees Package](README.md#trees)
+    i. [RedBlackTree](README.md#redblacktree)
 
 # Introduction
 Below is an outline of the various components of my solution. In short, the code outline below takse the following steps:
