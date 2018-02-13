@@ -1,7 +1,5 @@
 import org.scalatest.FunSuite
 
-import scala.io.Source
-
 class TestSuite extends FunSuite {
 
 	trait test1 {

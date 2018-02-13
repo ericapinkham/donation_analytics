@@ -7,9 +7,6 @@ object Tracker {
 	  * @param contributions a list of things on which to compute the precentile
 	  * @return
 	  */
-//	def computePercentile(percentile: Int)(contributions: List[Int]): Int = {
-//		contributions.sorted.apply((percentile / 100.0 * contributions.length).ceil.toInt - 1)
-//	}
 	def computePercentile(percentile: Int)(contributions: Trees.RedBlackTree.RedBlackTree): Int = {
 		Trees.RedBlackTree.kthOrder((percentile / 100.0 * contributions.size).ceil.toInt, contributions)
 	}
