@@ -77,7 +77,10 @@ object Donation {
 	  * @param transaction_amt the amount as a string
 	  * @return the amount as a Int
 	  */
-	private def extractAmount(transaction_amt: String): Int = math.round(transaction_amt.toDouble).toInt
+	private def extractAmount(transaction_amt: String): Int = {
+		if (transaction_amt.length == 0) 0
+		else math.round(transaction_amt.toDouble).toInt
+	}
 }
 
 /**
@@ -97,7 +100,7 @@ case class Donation(cmte_id: String, name: String, zip: String, year: Int, amoun
 			Donation.regexMatch("""^.{1,200}$""".r)(name), // Empty name is probably invalid
 			Donation.regexMatch("""^\d{5}$""".r)(zip),
 			year > 1776, // FEC probably didn't collect data before this
-			amount >= 0,
+			amount > 0,
 			other_id == ""
 		).foldLeft(true)((a,b) => a & b)
 	}

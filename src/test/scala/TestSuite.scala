@@ -129,6 +129,17 @@ class TestSuite extends FunSuite {
 		}
 	}
 	
+	test("Data extraction 07: Empty amount field") {
+		new TestOutput {
+			val donation = Donation("C00051979|N|M2|P|201702069044298762|15|IND|ARGO, DANA C|HOOKSETT|NH|03106|COLUMBIA GAS OF MASSACHUSETTS|MGR OPERATIONS CENTER|01312017|||PR263168521136|1147789||P/R DEDUCTION ($109.45 BI-WEEKLY)|4020820171370030914")
+			assert(donation.year === 2017)
+			assert(donation.cmte_id === "C00051979")
+			assert(donation.zip === "03106")
+			assert(donation.name === "ARGO, DANA C")
+			assert(donation.isValid === false)
+		}
+	}
+	
 	trait OutOfOrder extends TestOutput {
 		override val dataSet: String = "OutOfOrder"
 	}
