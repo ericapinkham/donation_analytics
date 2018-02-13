@@ -1,16 +1,3 @@
-# Table of Contents
-1. [Introduction](README.md#Introduction)
-2. [Dependencies](README.md#Dependencies)
-3. [Main](README.md#Main-summary)
-4. [Fec Package](README.md#FEC)
-    5. [Donation](README.md#Donation)
-    6. [FileIO](README.md#FileIO)
-    7. [Processor](README.md#Processor)
-    8. [Recipient](README.md#Recipient)
-    9. [Tracker](README.md#Tracker)
-10. [Trees Package](README.md#FEC)
-    11. [RedBlackTree](README.md#RedBlackTree)
-
 # Introduction
 Below is an outline of the various components of my solution. In short, the code outline below takse the following steps:
 * For each line in the file
