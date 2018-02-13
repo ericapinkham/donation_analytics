@@ -1,3 +1,4 @@
+import FEC.{Donation, FileIO, Processor, Tracker}
 import org.scalatest.FunSuite
 
 class TestSuite extends FunSuite {

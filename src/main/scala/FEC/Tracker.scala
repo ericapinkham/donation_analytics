@@ -1,3 +1,5 @@
+package FEC
+
 import Trees.RedBlackTree.EmptyTree
 
 object Tracker {

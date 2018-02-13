@@ -1,4 +1,6 @@
-/** A constructor object for the Recipient class */
+package FEC
+
+/** A constructor object for the FEC.Recipient class */
 object Recipient {
 	/**
 	  * Generates a new recipient

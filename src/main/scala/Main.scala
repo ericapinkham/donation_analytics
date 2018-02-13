@@ -1,3 +1,5 @@
+import FEC.{FileIO, Processor, Tracker}
+
 object Main extends App with Processor {
 	override def writeLine(line: String): Unit = fileIO.writeLine(line)
 	

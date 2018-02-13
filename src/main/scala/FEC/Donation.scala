@@ -1,10 +1,12 @@
+package FEC
+
 import scala.util.matching.Regex
 
 object Donation {
 	/**
 	  * Constructor for donation class
 	  * @param l the line to parse
-	  * @return a new Donation object
+	  * @return a new FEC.Donation object
 	  */
 	def apply(l: String): Donation = {
 		l.split('|') match {
