@@ -94,7 +94,7 @@ case class Donation(cmte_id: String, name: String, zip: String, year: Int, amoun
 	val isValid: Boolean = {
 		List(
 			Donation.regexMatch("""^[a-zA-Z\d]{9}""".r)(cmte_id),
-			Donation.regexMatch("""^.{0,200}$""".r)(name),
+			Donation.regexMatch("""^.{1,200}$""".r)(name), // Empty name is probably invalid
 			Donation.regexMatch("""^\d{5}$""".r)(zip),
 			year > 1776, // FEC probably didn't collect data before this
 			amount >= 0,

@@ -10,7 +10,9 @@ object Tracker {
 	  * @return
 	  */
 	def computePercentile(percentile: Int)(contributions: Trees.RedBlackTree.RedBlackTree): Int = {
-		Trees.RedBlackTree.kthOrder((percentile / 100.0 * contributions.size).ceil.toInt, contributions)
+		if (contributions.size > 0)
+			Trees.RedBlackTree.kthOrder((percentile / 100.0 * contributions.size).ceil.toInt, contributions)
+		else 0
 	}
 }
 

@@ -19,7 +19,7 @@ object Recipient {
 	  * @return a new recipient object
 	  */
 	def apply(tracker: Tracker)(donation: Donation): Recipient = donation match {
-		case Donation(cmte_id, _, zip, year, amount, _) => new Recipient(cmte_id, zip, year, amount, 1, tracker)
+		case Donation(cmte_id, _, zip, year, amount, _) if donation.isValid => new Recipient(cmte_id, zip, year, amount, 1, tracker)
 		case _ => throw new Error(s"Invalid parameter @donation: $donation")
 	}
 }
