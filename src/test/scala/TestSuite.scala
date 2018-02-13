@@ -1,4 +1,4 @@
-import FEC.{Donation, Processor, Tracker}
+import FEC.{Donation, Processor, Recipient, Tracker}
 import org.scalatest.FunSuite
 
 class TestSuite extends FunSuite {
@@ -17,7 +17,7 @@ class TestSuite extends FunSuite {
 	test("Data extraction 01") {
 		new TestOutput {
 			val donation = Donation("C00051979|N|M2|P|201702069044298762|15|IND|ARGO, DANA C|HOOKSETT|NH|03106|COLUMBIA GAS OF MASSACHUSETTS|MGR OPERATIONS CENTER|01312017|218||PR263168521136|1147789||P/R DEDUCTION ($109.45 BI-WEEKLY)|4020820171370030914")
-			val recipient = tracker.getRecipient(donation)
+			val recipient: Recipient = tracker.getRecipient(donation)
 			assert(donation.year === 2017)
 			assert(donation.cmte_id === "C00051979")
 			assert(donation.amount === 218)
@@ -33,7 +33,7 @@ class TestSuite extends FunSuite {
 	test("Data extraction 02") {
 		new TestOutput {
 			val donation = Donation("C00473249|N|M2|P|201702019042407767|15|IND|RICH, LOU|SCOTTSDALE|AZ|85259||RETIRED|01202017|575||SA11AI.5181|1147031|||4020820171370027428")
-			val recipient = tracker.getRecipient(donation)
+			val recipient: Recipient = tracker.getRecipient(donation)
 			assert(donation.year === 2017)
 			assert(donation.cmte_id === "C00473249")
 			assert(donation.amount === 575)
@@ -49,7 +49,7 @@ class TestSuite extends FunSuite {
 	test("Data extraction 03") {
 		new TestOutput {
 			val donation = Donation("C00455733|A|M2|P|201702029042408821|15|IND|REILLY, EDWARD|HUNTINGTON BEACH|CA|92646|FLAGSTAR BANK|PROFESSIONAL - SALES MANAGER|01302017|234||SA11AI.28935|1147202|||4020820171370029022")
-			val recipient = tracker.getRecipient(donation)
+			val recipient: Recipient = tracker.getRecipient(donation)
 			assert(donation.year === 2017)
 			assert(donation.cmte_id === "C00455733")
 			assert(donation.amount === 234)
@@ -90,7 +90,7 @@ class TestSuite extends FunSuite {
 	test("Data extraction 06: [0-9]{9} zip") {
 		new TestOutput {
 			val donation = Donation("C00193433|N|M2|P|201702149049352092|15|IND|MCLEOD, MIA MS.|LOS ALAMOS|NM|875471234|NOT-EMPLOYED|RETIRED|01162017|500||4934845|1148908|||4021420171370794621")
-			val recipient = tracker.getRecipient(donation)
+			val recipient: Recipient = tracker.getRecipient(donation)
 			assert(donation.year === 2017)
 			assert(donation.cmte_id === "C00193433")
 			assert(donation.amount === 500)
@@ -118,9 +118,9 @@ class TestSuite extends FunSuite {
 	test("Recipient aggregation 01") {
 		new TestOutput {
 			val donation1 = Donation("C00193433|N|M2|P|201702149049352092|15|IND|MR FAKE|LOS ALAMOS|NM|875471234|NOT-EMPLOYED|RETIRED|01162017|500||4934845|1148908|||4021420171370794621")
-			val recipient1 = tracker.getRecipient(donation1)
+			val recipient1: Recipient = tracker.getRecipient(donation1)
 			val donation2 = Donation("C00193433|N|M2|P|201702149049352092|15|IND|MR FAKE|LOS ALAMOS|NM|875471234|NOT-EMPLOYED|RETIRED|01162017|1000||4934845|1148908|||4021420171370794621")
-			val recipient2 = tracker.getRecipient(donation2) // This is now aggregated with recipient one.
+			val recipient2: Recipient = tracker.getRecipient(donation2) // This is now aggregated with recipient one.
 			assert(recipient2.year === 2017)
 			assert(recipient2.cmte_id === recipient2.cmte_id)
 			assert(recipient2.transactions === 2)
